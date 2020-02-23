@@ -134,3 +134,4 @@ dmypy.json
 # pytype static type analyzer
 .pytype/
 .gitlab-ci.yml
+.idea
