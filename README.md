@@ -1,9 +1,7 @@
 # opentracing python SDK
 
-# 0. TODO
+# 0. intro
 django-opentracing-logger is a django opentracing SDK based on logger which focus on ease to use.
-This project mainly works now, but we need to do a little work to let it works with official
-opentracing since it was built for a dialect of opentracing schema(90% of the schema were the same).
 
 ## 1. install
 ```bash
