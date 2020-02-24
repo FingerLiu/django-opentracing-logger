@@ -4,7 +4,7 @@ import time
 from django.http import HttpRequest, HttpResponse
 from .context import ctx
 from .tracer import get_tracer
-from .import constant
+from .import constant, tags
 from django.conf import settings
 from django.utils.deprecation import MiddlewareMixin
 
@@ -45,8 +45,8 @@ class DDTracerMiddleware(MiddlewareMixin):
             ctx.get_or_generate('span_id'),
             getattr(ctx, 'parent_id', 0)
         )
-        span.set_tag("http.request.url", request.build_absolute_uri())
-        span.set_tag("http.request.method", request.method)
+        span.set_tag(tags.HTTP_URL, request.build_absolute_uri())
+        span.set_tag(tags.HTTP_METHOD, request.method)
 
         setattr(ctx, 'span', span)
 
@@ -58,7 +58,7 @@ class DDTracerMiddleware(MiddlewareMixin):
             span = getattr(ctx, 'span', None)
             if not span:
                 return
-            span.set_tag("http.response.code", str(response.status_code))
+            span.set_tag(tags.HTTP_STATUS_CODE, str(response.status_code))
             if response.status_code == 500:
                 span.mark(constant.SPANKIND.ERROR.value)
             span.finish()
